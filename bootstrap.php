@@ -1,40 +1,24 @@
 <?php
 
-// Вспомогательный класс
-// хранит static ::setKey
-class Assests {
-	private static $_data = [];
-	private static function set($key, $str=NULL){
-		self::$_data[$key] = self::$_data[$key] . "\n" . $str;
-	}
-	private static function get($key, $str=NULL){
-		return str_replace("\n", "\n".$str, self::$_data[$key]) . "\n";
-	}
-	# $prefix - добавить табы перед \n
-	public static function __callStatic($name, $arguments){
-		// pars name
-		$key    = strtolower(substr($name, 3));
-		$method = strtolower(substr($name, 0, 3));
-		if ( ! array_key_exists($key, self::$_data) ) return __CLASS__ . ": ($method)'$key' not exists";
-		if($method == 'set') return self::set($key, $arguments[0]);
-		if($method == 'get') return self::get($key, $arguments[0]);
-	}
-	// добавляем ключи в $_data
-	public static function setKey($arr){
-		$arr = (array)$arr;
+// добавим пути для поиска include
+set_include_path(get_include_path()
+    . PATH_SEPARATOR . __DIR__ . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR
+    . PATH_SEPARATOR . __DIR__ . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR
+    . PATH_SEPARATOR . __DIR__ . DIRECTORY_SEPARATOR . 'controller' . DIRECTORY_SEPARATOR
+    . PATH_SEPARATOR . __DIR__ . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR
+);
 
-		foreach ($arr as $key):
-			$key = strtolower($key);
-			self::$_data[$key] = isset(self::$_data[$key])
-				? self::$_data[$key] : NULL;
-		endforeach;
-	}
-}
+// подгрузим всопомательный класс синглтон
+include ('Help.php');
 
-// добавим ключи в Assests что бы потом можно было с ними работать
-Assests::setKey(['head','content','end','start','EndScripts']);
+// добавим ключи в Help чтобы
+// // потом можно было с ними работать
+// Help::set{$Key} - set значение
+// Help::get{$Key} - get значение
+Help::setKey(['head','content','end','start','EndScripts']);
 
-Assests::setHead(<<<EOF
+// регестрируем link для head
+Help::setHead(<<<EOF
 <link rel="stylesheet" href="css/font-awesome.css">
 <link rel="stylesheet" href="css/foundation.css">
 <link rel="stylesheet" href="css/jquery.datetimepicker.css">
@@ -44,7 +28,8 @@ Assests::setHead(<<<EOF
 EOF
 );
 
-Assests::setEndScripts(<<<EOF
+// добавим <SCRIPTS> в конец body
+Help::setEndScripts(<<<EOF
 <script src="js/jquery.min.js"></script>
 <script src="js/foundation.min.js"></script>
 <script src="js/jquery.datetimepicker.js"></script>
@@ -53,21 +38,18 @@ Assests::setEndScripts(<<<EOF
 EOF
 );
 
-// буферизация file, return include
-function getView($file, $arr=[]){
-	$arr = (array)$arr;
-	extract($arr);
-	ob_start();
-	include ('view' . DIRECTORY_SEPARATOR . $file);
-	return ob_get_clean();
-}
-
+// буферизируем Help::getView(files) и
 // добавим модальные окна в конец body
-$str  = getView('modal-show-user.php');
-$str .= getView('modal-add-user.php');
-Assests::setEnd($str);
+Help::setEnd(
+	Help::getView('modal-show-user.php').
+	Help::getView('modal-add-user.php')
+);
 
-// добавим <SCRIPTS> в конец body
-$str  = getView('navigation.php');
-$str .= getView('content.php');
-Assests::setContent($str);
+// здесь у нас основой контент страницы
+Help::setContent(
+	Help::getView('navigation.php').
+	Help::getView('content.php')
+);
+
+include ('view' . DIRECTORY_SEPARATOR . 'index.php');
+
