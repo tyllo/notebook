@@ -1,0 +1,27 @@
+{
+  "name": "notebook",
+  "version": "0.0.1",
+  "authors": [
+    "tyllo <gmtyllo@gmail.com>"
+  ],
+  "description": "Записная книжка - тестовое задание",
+  "keywords": [
+    "notebook",
+    "записная",
+    "книжка"
+  ],
+  "license": "MIT",
+  "homepage": "xdraw.ru",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "datetimepicker": "~2.4.1",
+    "font-awesome": "~4.3.0",
+    "foundation": "~5.5.1"
+  }
+}
