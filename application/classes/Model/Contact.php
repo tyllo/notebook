@@ -1,28 +1,14 @@
 <?php
 
-class Model{
+class Model_Contact extends Model{
 
     // подсоединяемся к database
     protected $db;
     public function __construct(){
         $this->db = Db::getInstance();
     }
-    protected function getPost($key){
-        $result = isset($_POST[$key]) ? $_POST[$key] : NULL;
-        if (is_array($result)):
-            foreach ($result as & $res):
-                $res = trim($res);
-                $res = htmlspecialchars($res);
-                $res =  mysql_escape_string($res);
-            endforeach;
-        else:
-            $result = trim($result);
-            $result = htmlspecialchars($result);
-            $result =  mysql_escape_string($result);
-        endif;
-        return $result;
-    }
-    public function creatContact($contact){
+    // создать контакт
+    public function creat($contact){
         $query =
             "INSERT INTO contact
                 (contact_name, contact_surname, contact_patronymic, contact_date, street_id)
@@ -50,6 +36,25 @@ class Model{
         endforeach;
         return TRUE;
     }
+    // обновить инфу о контакте
+    public function update($id){}
+    // get info контакте
+    public function read($id){}
+    // удалить контакт
+    public function delete($id){
+        // удалим все телефоны контакта $id
+        $query =" DELETE FROM phone WHERE contact_id = '$id';";
+        $this->db->query($query);
+        // если ошибка, то FALSE
+        if ($this->db->error()) return FALSE;
+        // удалим контакт $id
+        $query =" DELETE FROM contact WHERE contact_id = '$id';";
+        $this->db->query($query);
+        // если ошибка, то FALSE
+        if ($this->db->error()) return FALSE;
+        return TRUE;
+    }
+    // return $_POST
     public function getPostContact(){
         // formate date
         $date = $this->getPost('date');
@@ -67,37 +72,5 @@ class Model{
            'street'     => (int)$this->getPost('street'),
            'date'       => $date,
         ];
-    }
-
-    // список улиц по id города
-    public function getStreet($id){
-        // запрашиваем улицы где город равен $id
-        $query  = "
-            SELECT `street_id`, `street_name`
-            FROM `street`
-            WHERE city_id=$id;";
-        $result = $this->db->query($query);
-        if ($this->db->error()) return FALSE;
-
-        $streetArr = [];
-        while( $line = $result->fetch_assoc() ):
-            $streetArr[$line['street_id']] = $line['street_name'];
-        endwhile;
-        $result->free();
-        // TODO нужно закешировать результат
-        return json_encode($streetArr);
-    }
-    // список городов
-    public function getCity(){
-        // запрашиваем всю таблицу city
-        $query  = "SELECT * FROM city;";
-        $result = $this->db->query($query);
-        $cityArr = [];
-        while( $line = $result->fetch_assoc() ):
-            $cityArr[$line['city_id']] = $line['city_name'];
-        endwhile;
-        $result->free();
-        // TODO нужно закешировать результат
-        return $cityArr;
     }
 }

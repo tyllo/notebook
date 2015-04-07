@@ -6,8 +6,10 @@ class Controller_Home extends Controller_Page{
     public $layout = 'layouts/default.php';
 
     public function action_index(){
+        // получим список всех юзеров
+        $contactArr = $this->model->getContacts();
         // здесь у нас основой контент страницы
-        $this->view->content = View::View('content.php');
+        $this->view->content = View::View('content.php', [ 'contactArr' => $contactArr]);
         // добавим модальные окна в конец body
         $this->view->after  = View::View('modal-show-user.php');
         // получим список городов

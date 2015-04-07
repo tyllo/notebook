@@ -59,8 +59,8 @@
 						<label>
 						<select name="city" id="city" required>
 							<option value="default">...</option>
-							<?php foreach ($cityArr as $city_id => $city_name):?>
-                            <option value="<?=$city_id?>"><?=$city_name?></option>
+							<?php foreach ($cityArr as $city):?>
+                            <option value="<?=$city['id']?>"><?=$city['name']?></option>
                             <?php endforeach;?>
 						</select>
 					</label>

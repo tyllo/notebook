@@ -66,11 +66,10 @@ $('#street').attr('disabled','disabled');
             var result = '';
             // установим значение начального option
             $(defaultOpt).text('...');
-            $.each(streetArr, function(street_id, street_name){
-                // результат нужно добавить в localStorage
+            $.each(streetArr, function(key,street){
+                // alert (value);
                 result = result +
-                    '<option value="' + street_id + '">' +
-                    street_name + '</option>';
+                '<option value="' + street.id + '">' + street.name + '</option>';
             });
             $('#street').append(result);
             delete window.result;

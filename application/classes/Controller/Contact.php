@@ -17,12 +17,13 @@ class Controller_Contact extends Controller{
             $e->start();
         endif;
         // создадим новую запись в базе
-        $result = $this->model->creatContact($contact);
+        $result = $this->model->creat($contact);
         // если ошибка создания записи
         if ( $result === FALSE ):
             $e = new Exception404('Ошибка записи контакта');
             $e->start();
         endif;
+        header("Location: http://".$_SERVER['HTTP_HOST']."/");
     }
     public function action_read(){
         if ($this->is_ajax()):
@@ -32,5 +33,14 @@ class Controller_Contact extends Controller{
         endif;
     }
     public function action_update(){}
-    public function action_delete(){}
+    public function action_delete(){
+        // получим id удаляемого контакта
+        $id = (int)Router::get('id');
+        $result = $this->model->delete($id);
+        if ( $result === FALSE ):
+            $e = new Exception404('Ошибка записи контакта');
+            $e->start();
+        endif;
+        header("Location: http://".$_SERVER['HTTP_HOST']."/");
+    }
 }
