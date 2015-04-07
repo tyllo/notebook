@@ -1,20 +1,33 @@
-//@import "settings";
-//@import "foundation";
+@import "settings";
+@import "foundation";
+
+$topbar-breakpoint: #{lower-bound(9999px)}; // Change to 9999px for always mobile layout
+$topbar-media-query: $medium-up;
+$topbar-breakpoint: #{lower-bound($screen)};
+$topbar-media-query: "only screen";
+
+@import
+    "foundation/components/block-grid",
+    "foundation/components/forms",
+    "foundation/components/grid",
+    "foundation/components/buttons",
+    "foundation/components/panels",
+    "foundation/components/reveal",
+    "foundation/components/thumbs",
+    "foundation/components/top-bar",
+    "foundation/components/visibility",
+    "foundation/components/offcanvas";
 
 // Or selectively include components
 // @import
 //   "foundation/components/accordion",
 //   "foundation/components/alert-boxes",
-//   "foundation/components/block-grid",
 //   "foundation/components/breadcrumbs",
 //   "foundation/components/button-groups",
-//   "foundation/components/buttons",
 //   "foundation/components/clearing",
 //   "foundation/components/dropdown",
 //   "foundation/components/dropdown-buttons",
 //   "foundation/components/flex-video",
-//   "foundation/components/forms",
-//   "foundation/components/grid",
 //   "foundation/components/inline-lists",
 //   "foundation/components/joyride",
 //   "foundation/components/keystrokes",
@@ -22,26 +35,30 @@
 //   "foundation/components/magellan",
 //   "foundation/components/orbit",
 //   "foundation/components/pagination",
-//   "foundation/components/panels",
 //   "foundation/components/pricing-tables",
 //   "foundation/components/progress-bars",
-//   "foundation/components/reveal",
 //   "foundation/components/side-nav",
 //   "foundation/components/split-buttons",
 //   "foundation/components/sub-nav",
 //   "foundation/components/switches",
 //   "foundation/components/tables",
 //   "foundation/components/tabs",
-//   "foundation/components/thumbs",
 //   "foundation/components/tooltips",
-//   "foundation/components/top-bar",
-//   "foundation/components/type",
-//   "foundation/components/offcanvas",
-//   "foundation/components/visibility";
+//   "foundation/components/top-bar";
 
 .hide-text{
-  width:auto;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    width:auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8em;
+    display: block;
+}
+li{
+  line-height: 1.3;
+}
+
+.tabs dd > a, .tabs .tab-title > a
+{
+    color: white;
 }

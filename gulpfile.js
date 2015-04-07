@@ -81,7 +81,7 @@ gulp.task('build', function() {
   gulp.run('components/datetimepicker');
   gulp.run('components/jquery');
   gulp.run('components/modernizr');
-  gulp.run('components/foundation');
+  //gulp.run('components/foundation');
 	gulp.run('components/font-awesome');
 	//gulp.run('components/cropper');
 	gulp.run('src');
