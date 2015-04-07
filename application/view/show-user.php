@@ -1,15 +1,3 @@
-<?php
-$contact_id='36';
-$contact_name = 'Андрей';
-$contact_surname = 'Пастухов';
-$contact_patronymic = 'Игоревич';
-$phoneArr = ['7 924 125603','8 909 123 45 67'];
-$city_name = 'Арсеньев';
-$city_id   = '123';
-$street_name = 'Украинский пер.';
-$street_id = '5';
-$date = '1231124'
-?>
 <!-- show user -->
 <!-- ############# name ################ -->
 <div class="row collapse">
@@ -89,7 +77,7 @@ $date = '1231124'
 		<span class="prefix"><i class="fa fa-calendar"></i></span>
 	</div>
 	<div class="small-10 medium-11 columns">
-		<input name="date" type="date" id="datetimepicker" value="<?=$date?>" disabled>
+		<input name="date" type="date" id="datetimepicker" value="<?=$contact_date?>" disabled>
 	</div>
 </div>
 <!-- ############ button ############### -->

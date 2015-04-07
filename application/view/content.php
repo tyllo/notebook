@@ -2,7 +2,7 @@
 <div class="row">
   <br><!-- <div class="small-12 columns"><h3>Заголовок</h3></div> -->
 </div>
-<div class="row collapse">
+<div class="row">
   <ul class="small-block-grid-3 medium-block-grid-6 large-block-grid-8">
 <?php foreach($contactArr as $contact) :?>
     <li>

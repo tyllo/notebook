@@ -39,7 +39,26 @@ class Model_Contact extends Model{
     // обновить инфу о контакте
     public function update($id){}
     // get info контакте
-    public function read($id){}
+    public function read($id){
+        $query  = "SELECT * FROM contact  AS table1 INNER JOIN street USING (street_id)";
+        $query  = "SELECT * FROM ($query) AS table2 INNER JOIN city   USING (city_id)";
+        $query  = "$query WHERE contact_id='$id'";
+        $result = $this->db->query($query);
+        // если ошибка, то FALSE
+        if ($this->db->error()) return FALSE;
+        // результат это одна строка
+        $arr = $result->fetch_assoc();
+
+        // отдельным запросом получим phone
+        $query  = "SELECT phone_number FROM phone WHERE contact_id='$id'";
+        $result = $this->db->query($query);
+        // если ошибка, то FALSE
+        if ($this->db->error()) return FALSE;
+        while( $line = $result->fetch_assoc() )
+            $phoneArr[] = $line['phone_number'];
+        $arr['phoneArr'] = $phoneArr;
+        return $arr;
+    }
     // удалить контакт
     public function delete($id){
         // удалим все телефоны контакта $id
@@ -54,7 +73,22 @@ class Model_Contact extends Model{
         if ($this->db->error()) return FALSE;
         return TRUE;
     }
-    // return $_POST
+    protected function getPost($key){
+        $result = isset($_POST[$key]) ? $_POST[$key] : NULL;
+        if (is_array($result)):
+            foreach ($result as & $res):
+                $res = trim($res);
+                $res = htmlspecialchars($res);
+                $res =  mysql_escape_string($res);
+            endforeach;
+        else:
+            $result = trim($result);
+            $result = htmlspecialchars($result);
+            $result =  mysql_escape_string($result);
+        endif;
+        return $result;
+    }  
+		// return $_POST
     public function getPostContact(){
         // formate date
         $date = $this->getPost('date');

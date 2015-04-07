@@ -26,11 +26,15 @@ class Controller_Contact extends Controller{
         header("Location: http://".$_SERVER['HTTP_HOST']."/");
     }
     public function action_read(){
-        if ($this->is_ajax()):
-            $this->layout = 'show-user.php';
-        else:
-            $this->view->content = View::View('show-user.php');
+        // получим id запрошенного контакта
+        $id = (int)Router::get('id');
+        $result = $this->model->read($id);
+        if ( $result === FALSE ):
+            $e = new Exception404('Ошибка чтения контакта');
+            $e->start();
         endif;
+
+        $this->view->content = View::View('show-user.php', $result);
     }
     public function action_update(){}
     public function action_delete(){
