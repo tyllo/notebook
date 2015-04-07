@@ -6,5 +6,7 @@
 			<h4>Инфо о контакте</h4>
 		</div>
 	</div>
+    <!-- контейнер, куда будет вставляться ajax с запрашиваемым контактом -->
+    <div id="show-user"></div>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

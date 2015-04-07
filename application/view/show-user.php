@@ -1,4 +1,15 @@
-
+<?php
+$contact_id='36';
+$contact_name = 'Андрей';
+$contact_surname = 'Пастухов';
+$contact_patronymic = 'Игоревич';
+$phoneArr = ['7 924 125603','8 909 123 45 67'];
+$city_name = 'Арсеньев';
+$city_id   = '123';
+$street_name = 'Украинский пер.';
+$street_id = '5';
+$date = '1231124'
+?>
 <!-- show user -->
 <!-- ############# name ################ -->
 <div class="row collapse">
@@ -6,38 +17,40 @@
 		<span class="prefix"><i class="fa fa-user fa-fw"></i></span>
 	</div>
 	<div class="small-11 medium-3 columns">
-		<input name="name" type="text" placeholder="Имя" required>
+		<input name="name" type="text" placeholder="Имя" value="<?=$contact_name?>" required disabled>
 	</div>
 
 	<div class="small-1 show-for-small columns">
 		<span class="prefix"><i class="fa fa-user"></i></span>
 	</div>
 	<div class="small-11 medium-4 columns">
-		<input name="surname" type="text" placeholder="Фамилия" required>
+		<input name="surname" type="text" placeholder="Фамилия" value="<?=$contact_surname?>" required disabled>
 	</div>
 
 	<div class="small-1 show-for-small columns">
 		<span class="prefix"><i class="fa fa-user"></i></span>
 	</div>
 	<div class="small-11 medium-4 columns">
-		<input name="patronymic" type="text" placeholder="Отчество">
+		<input name="patronymic" type="text" placeholder="Отчество" value="<?=$contact_patronymic?>" disabled>
 	</div>
 </div>
 <!-- ############# phone ############### -->
 <div id="container">
+<?php foreach ($phoneArr as $phone): ?>
 	<div class="row collapse" id="PhoneCollcetion">
 		<div class="small-1 columns">
 			<span class="prefix"><i class="fa fa-phone"></i></span>
 		</div>
 		<div class="small-10 medium-10 columns">
-			<input name="phone[]" type="tel" placeholder="Телефон" required>
+			<input name="phone[]" type="tel" placeholder="Телефон" value="<?=$phone?>" required disabled>
 		</div>
 		<div class="small-1 columns">
-			<a class="button postfix success add" href="#">
+			<a class="button postfix success add" href="#" disabled>
 				<i class="fa fa-plus"></i>
 			</a>
 		</div>
 	</div>
+<?php endforeach; ?>
 </div>
 <!-- ############# street ############## -->
 <div class="row collapse">
@@ -48,12 +61,8 @@
 			</div>
 			<div class="small-10 columns">
 					<label>
-					<select name="city" id="city" required>
-						<option value="default">...</option>
-						<option value="husker">Владивосток</option>
-						<option value="starbuck">Москва</option>
-						<option value="hotdog">Самара</option>
-						<option value="apollo">Сочи</option>
+					<select name="city" id="city" required disabled>
+						<option value="<?=$city_id?>"><?=$city_name?></option>
 					</select>
 				</label>
 			</div>
@@ -66,8 +75,8 @@
 			</div>
 			<div class="small-10 columns">
 				<label>
-					<select name="street" id="street" required>
-						<option value="default">...</option>
+					<select name="street" id="street" required disabled>
+						<option value="<?=$street_id?>"><?=$street_name?></option>
 					</select>
 				</label>
 			</div>
@@ -80,13 +89,15 @@
 		<span class="prefix"><i class="fa fa-calendar"></i></span>
 	</div>
 	<div class="small-10 medium-11 columns">
-		<input name="date" type="date" id="datetimepicker">
+		<input name="date" type="date" id="datetimepicker" value="<?=$date?>" disabled>
 	</div>
 </div>
 <!-- ############ button ############### -->
-<div class="row">
-	<div class="small-12">
-		<input type="submit" class="button" value="Добавить">
-	</div>
+<div class="row collapse">
+	<form style="display: inline-block" action="/contact/update/<?=$contact_id?>">
+		<input type="submit" class="button" value="Редактировать">
+	</form>
+	<form style="display: inline-block" action="/contact/delete/<?=$contact_id?>">
+		<input type="submit" class="button alert" value="Удалить">
+	</form>
 </div>
-

@@ -55,26 +55,22 @@ $('#street').attr('disabled','disabled');
         return;
     };
     $(defaultOpt).text('Загрузка улиц...');
-    // здесь хорошо бы localStorage проверить, 
-    // вдруг уже подгружали улицы, незачем сервер нагружать
-    var url = $('form[name="add-user"]').attr('action');
+    var url = '/form/get/city/'+$(this).val();
     //запрос ajax
     $.ajax({
         url: url,
         type: 'POST',
-        dataType: 'json',
-        data: 'get=street&city='+$(this).val(),
         success: function(data){
             var streetArr = $.parseJSON(data);
             // pars option string
             var result = '';
             // установим значение начального option
             $(defaultOpt).text('...');
-            $.each(streetArr, function(key, street){
+            $.each(streetArr, function(street_id, street_name){
                 // результат нужно добавить в localStorage
                 result = result +
-                    '<option name="' + street.id + '">' +
-                    street.name + '</option>';
+                    '<option value="' + street_id + '">' +
+                    street_name + '</option>';
             });
             $('#street').append(result);
             delete window.result;
@@ -87,21 +83,21 @@ $('#street').attr('disabled','disabled');
     })
 })
 
-////////////////// get user info //////////////////
+////////////////// contact/read/$id info //////////////////
 $('a[data-id-user]').click(function(){
+    // удалим ранее подгуженный contact
+    $('#show-user').children().remove();
     var idUser = $(this).attr('data-id-user');
-    var url = '/add-user';
+    var url = '/contact/read/'+idUser;
     $.ajax({
         url: url,
         type: 'POST',
-        data: 'set=user&user=' + idUser,
         success: function(data){
-            alert(data);
+            // добавим полученный contact в модальное окно
+            $('#show-user').append(data);
         },
         error: function(data){
-            // error user
+            $('#show-user').append('<h3>Не получилось загрузить,<br> ошибка на сервере</h3>');
         }
     })
 })
-
-

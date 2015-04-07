@@ -8,7 +8,7 @@
 		</div>
 	</div>
 
-<form name="add-user" action="/add-user.php" method="post">
+<form name="add-user" action="/contact/creat" method="post">
 	<!-- ############# name ################ -->
 	<div class="row collapse">
 		<div class="small-1 columns">
@@ -59,10 +59,9 @@
 						<label>
 						<select name="city" id="city" required>
 							<option value="default">...</option>
-							<option value="husker">Владивосток</option>
-							<option value="starbuck">Москва</option>
-							<option value="hotdog">Самара</option>
-							<option value="apollo">Сочи</option>
+							<?php foreach ($cityArr as $city_id => $city_name):?>
+                            <option value="<?=$city_id?>"><?=$city_name?></option>
+                            <?php endforeach;?>
 						</select>
 					</label>
 				</div>

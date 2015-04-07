@@ -5,12 +5,12 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Записная книжка</title>
-            <?= Help::getHead($tabs); ?>
+            <?= Help::get()->head($tabs); ?>
     </head>
     <body>
-            <?= Help::getStart($tabs); ?>
-            <?= Help::getContent($tabs); ?>
-            <?= Help::getEnd($tabs); ?>
-            <?= Help::getEndScripts($tabs); ?>
+            <?= $before; ?>
+            <?= $content; ?>
+            <?= $after; ?>
+            <?= Help::get()->end($tabs); ?>
     </body>
 </html>
