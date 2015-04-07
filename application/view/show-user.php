@@ -33,8 +33,8 @@
 			<input name="phone[]" type="tel" placeholder="Телефон" value="<?=$phone?>" required disabled>
 		</div>
 		<div class="small-1 columns">
-			<a class="button postfix success add" href="#" disabled>
-				<i class="fa fa-plus"></i>
+			<a class="button postfix secondary add" href="#" disabled>
+				<i class="fa fa-minus"></i>
 			</a>
 		</div>
 	</div>
