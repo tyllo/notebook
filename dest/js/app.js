@@ -12,7 +12,7 @@ function datetimepickerset(){
         dayOfWeekStart: 1,
     });
 };
-///////////////// set street from server //////////////////
+///////////////// set street from server ////////////
 var getStreets = function(url, val='') {
     var defaultOpt = $('select[name="street"] option[value=""]');
    $.ajax({
@@ -87,7 +87,7 @@ $('select[name="city"]').change(function() {
    $('select[name="street"]').append( getStreets(url) );
 });
 
-///////////// contact/creat/ info ////////////////
+///////////////// contact/creat/ ////////////////////
 $('a[data-reveal-id="modal-creat-user"]').click(function(){
     $('form[name="creat-user"]').children().remove();
     $(cloneCreatForm).clone(true)
@@ -96,46 +96,28 @@ $('a[data-reveal-id="modal-creat-user"]').click(function(){
     datetimepickerset();
 });
 
-//////////// contact/read/$id info //////////////
+///////////////// contact/read ////////////////////
 $('a[data-id-user]').click(function(){
     // удалим ранее подгуженный contact
     $('#read-user').children().remove();
+    $('#read-user').append('<h3>Загрузка данны с сервера... </h3>');
     idUser = $(this).attr('data-id-user');
     var url = '/contact/read/'+idUser;
     $.ajax({
         url: url,
         type: 'POST',
         success: function(data){
-            // добавим полученный contact в модальное окно
-            $('#read-user').append(data);
-        },
-        error: function(data){
-            $('#read-user').append('<h3>Не получилось загрузить,<br> ошибка на сервере</h3>');
-        }
-    })
-});
-
-//////////// contact/update/$id info ////////////
-$('#update').click(function(){
-    // удалим ранее подгуженный contact
-    $('#update-user').children().remove();
-    $('#update-user').append('<h3>Загрузка данны с сервера... </h3>');
-    var url = '/contact/update/'+idUser;
-    // добавим idUser к экшену
-    $('#modal-update-user form').attr('action', url);
-    $.ajax({
-        url: url,
-        type: 'POST',
-        success: function(data){
-            console.log(contact);
+            $('#read-user').children().remove();
+            // вставим id user в форму для правильного update
+            var url = '/contact/update/'+idUser;
+            $('#modal-read-user form').attr('action',url);
             var contact = $.parseJSON(data);
-            // почистим
-            $('#update-user').children().remove();
             // вставим чистый клон
-            $(cloneCreatForm).clone(true).appendTo('#update-user');
+            $(cloneCreatForm).clone(true).appendTo('#read-user');
             // навешиваем обработчик даты datetimepicker
             datetimepickerset();
-
+            // удалим кнопку
+            $('#read-user div:last').remove();
             // добавим полученный contact в модальное окно
             $('input[name="name"]').val(contact.contact_name);
             $('input[name="surname"]').val(contact.contact_surname);
@@ -162,12 +144,16 @@ $('#update').click(function(){
             });
         },
         error: function(data){
-            $('#update-user').append('<h3>Не получилось загрузить,<br> ошибка на сервере</h3>');
+            $('#read-user').children().remove();
+            $('#read-user').append('<h3>Не получилось загрузить,<br> ошибка на сервере</h3>');
         }
     })
 });
+/////////////// contact/update/$id ////////////////
+// $('#update').click(function(){
+// });
 
-/////////// contact/delete/$id info /////////////
+/////////////// contact/delete/$id /////////////////
 $('#delete').click(function(){
     var href = $(this).attr('href');
     href = href + idUser;

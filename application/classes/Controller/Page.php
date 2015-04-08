@@ -4,7 +4,6 @@ class Controller_Page extends Controller{
 
     // основной шаблон, куда будут рендериться переменные из view
     public $layout = 'layouts/default.php';
-
     public function before(){
         parent::before();
 

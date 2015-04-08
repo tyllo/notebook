@@ -89,7 +89,7 @@ class Model_Contact extends Model{
         endif;
         return $result;
     }
-		// return $_POST
+	// return $_POST
     public function getPostContact(){
         // formate date
         // $date = $this->getPost('date');

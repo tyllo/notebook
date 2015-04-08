@@ -10,6 +10,7 @@ class Controller_Contact extends Controller{
     // шаблом по умолчанию
     public $layout = 'layouts/clean.php';
 
+    // creat contact
     public function action_creat(){
         $contact = $this->model->getPostContact();
         if( !$contact['name'] ):
@@ -25,18 +26,8 @@ class Controller_Contact extends Controller{
         endif;
         header("Location: http://".$_SERVER['HTTP_HOST']."/");
     }
+    // read contact
     public function action_read(){
-        // получим id запрошенного контакта
-        $id = (int)Router::get('id');
-        $result = $this->model->read($id);
-        if ( $result === FALSE ):
-            $e = new Exception404('Ошибка чтения контакта');
-            $e->start();
-        endif;
-
-        $this->view->content = View::View('read-user.php', $result);
-    }
-    public function action_update(){
         // получим id запрошенного контакта
         $id = (int)Router::get('id');
         $result = $this->model->read($id);
@@ -47,6 +38,13 @@ class Controller_Contact extends Controller{
 
         $this->view->content = json_encode($result);
     }
+    // update contact
+    public function action_update(){
+        // получим id запрошенного контакта
+        $id = (int)Router::get('id');
+        echo "update: $id";
+    }
+    // delete contact
     public function action_delete(){
         // получим id удаляемого контакта
         $id = (int)Router::get('id');
