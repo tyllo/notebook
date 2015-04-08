@@ -40,9 +40,19 @@ class Controller_Contact extends Controller{
     }
     // update contact
     public function action_update(){
-        // получим id запрошенного контакта
+        // получим id обновляемого контакта
         $id = (int)Router::get('id');
-        echo "update: $id";
+
+        $contact = $this->model->getPostContact();
+print_r($contact);die();
+        // обновим запись в базе
+        $result = $this->model->update($contact, $id);
+        // если ошибка
+        if ( $result === FALSE ):
+            $e = new Exception404('Ошибка обновления');
+            $e->start();
+        endif;
+        header("Location: http://".$_SERVER['HTTP_HOST']."/");
     }
     // delete contact
     public function action_delete(){

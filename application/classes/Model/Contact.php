@@ -37,7 +37,33 @@ class Model_Contact extends Model{
         return TRUE;
     }
     // обновить инфу о контакте
-    public function update($id){}
+    public function update($contact, $id){
+        $query =
+            "UPDATE contact SET
+                contact_name       = '$contact[name]',
+                contact_surname    = '$contact[surname]',
+                contact_patronymic = '$contact[patronymic]',
+                avatar             = '$contact[avatar]',
+                contact_date       = '$contact[date]',
+                street_id          = '$contact[street]'
+            WHERE contact_id       = '$id'
+            ;"
+        ;
+        // обновим запись
+        $this->db->query($query);
+        // если ошибка, то FALSE
+        if ($this->db->error()) return FALSE;
+        // обновим все телефоны контакта в таблицу phone
+        // последний индефикатор id
+        $contact_id = $this->db->insert_id();
+        foreach($contact['phone'] as $phone):
+            $query ="INSERT INTO phone (phone_number, contact_id)
+                     VALUES ('$phone','$contact_id')";
+            $this->db->query($query);
+            if ($this->db->error()) return FALSE;
+        endforeach;
+        return TRUE;
+    }
     // get info контакте
     public function read($id){
         $query  = "SELECT * FROM contact  AS table1 INNER JOIN street USING (street_id)";
