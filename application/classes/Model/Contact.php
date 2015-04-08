@@ -97,13 +97,12 @@ class Model_Contact extends Model{
         // $date = (count($arr) ==3)
         // ? (int)$arr[2].'-'.(int)$arr[1].'-'.(int)$arr[0]
         // : NULL;
-        $avatar = '/images/avatar/avatar-'.(int)$this->getPost('avatar').'.png';
 
         return [
            'name'       => $this->getPost('name'),
            'surname'    => $this->getPost('surname'),
            'patronymic' => $this->getPost('patronymic'),
-           'avatar'     => $avatar,
+           'avatar'     => $this->getPost('avatar'),
            'phone'      => $this->getPost('phone'),
            'city'       => (int)$this->getPost('city'),
            'street'     => (int)$this->getPost('street'),

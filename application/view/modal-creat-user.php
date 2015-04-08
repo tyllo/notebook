@@ -16,14 +16,15 @@
                   <li>
                     <label>
                         <img src="/images/avatar/avatar-1.png">
-                        <input type="radio" checked="checked" style="position: relative; bottom: 15px" name="avatar" value="1">
+                        <input type="radio" style="position: relative; bottom: 15px" name="avatar" value="/images/avatar/avatar-1.png">
                     </label>
                   </li>
                     <?php $i=2; while($i<25):?>
                   <li style="margin: 0;">
                     <label>
-                        <img src="/images/avatar/avatar-<?=$i?>.png">
-                        <input type="radio" style="position: relative; bottom: 15px" name="avatar" value="<?=$i?>">
+                        <?php $avatar = "/images/avatar/avatar-$i.png";?>
+                        <img src="<?=$avatar?>">
+                        <input type="radio" style="position: relative; bottom: 15px" name="avatar" value="<?=$avatar?>">
                     </label>
                   </li>
                     <?php $i++; endwhile; ?>
@@ -60,7 +61,7 @@
                     <span class="prefix"><i class="fa fa-phone"></i></span>
                 </div>
                 <div class="small-10 medium-10 columns">
-                    <input name="phone[]" type="tel" placeholder="Телефон" required>
+                    <input name="phone[]" type="tel" placeholder="Телефон">
                 </div>
                 <div class="small-1 columns">
                     <a class="button postfix success add" href="#">
@@ -73,10 +74,10 @@
         <div class="row collapse">
             <div class="small-12 medium-6 columns">
                 <div class="row collapse">
-                    <div class="small-2 columns">
+                    <div class="small-1 medium-2 columns">
                         <span class="prefix"><i class="fa fa-map-marker"></i></span>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-11 medium-10 columns">
                             <label>
                             <select name="city" required>
                                 <option value="">...</option>
@@ -90,10 +91,10 @@
             </div>
             <div class="small-12 medium-6 columns">
                 <div class="row collapse">
-                    <div class="small-2 columns">
+                    <div class="small-1 medium-2 columns">
                         <span class="prefix"><i class="fa fa-street-view"></i></span>
                     </div>
-                    <div class="small-10 columns">
+                    <div class="small-11 medium-10 columns">
                         <label>
                             <select name="street" required>
                                 <option value="">...</option>
@@ -105,10 +106,10 @@
         </div>
         <!-- ############# date ################ -->
         <div class="row collapse">
-            <div class="small-2 medium-1 columns">
+            <div class="small-1 medium-2 columns">
                 <span class="prefix"><i class="fa fa-calendar"></i></span>
             </div>
-            <div class="small-10 medium-11 columns">
+            <div class="small-11 medium-10 columns">
                 <input name="date" type="date" class="datetimepicker">
             </div>
         </div>

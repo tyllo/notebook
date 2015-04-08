@@ -45,7 +45,7 @@ class Controller_Contact extends Controller{
             $e->start();
         endif;
 
-        $this->view->content = View::View('update-user.php', $result);
+        $this->view->content = json_encode($result);
     }
     public function action_delete(){
         // получим id удаляемого контакта
