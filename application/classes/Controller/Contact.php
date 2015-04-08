@@ -34,9 +34,19 @@ class Controller_Contact extends Controller{
             $e->start();
         endif;
 
-        $this->view->content = View::View('show-user.php', $result);
+        $this->view->content = View::View('read-user.php', $result);
     }
-    public function action_update(){}
+    public function action_update(){
+        // получим id запрошенного контакта
+        $id = (int)Router::get('id');
+        $result = $this->model->read($id);
+        if ( $result === FALSE ):
+            $e = new Exception404('Ошибка чтения контакта');
+            $e->start();
+        endif;
+
+        $this->view->content = View::View('update-user.php', $result);
+    }
     public function action_delete(){
         // получим id удаляемого контакта
         $id = (int)Router::get('id');

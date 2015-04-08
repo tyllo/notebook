@@ -1,4 +1,4 @@
-<!-- show user -->
+<!-- read user -->
 <!-- ############# name ################ -->
 <div class="row collapse">
 	<div class="small-1 columns">
@@ -25,7 +25,7 @@
 <!-- ############# phone ############### -->
 <div id="container">
 <?php foreach ($phoneArr as $phone): ?>
-	<div class="row collapse" id="PhoneCollcetion">
+	<div class="row PhoneCollcetion collapse">
 		<div class="small-1 columns">
 			<span class="prefix"><i class="fa fa-phone"></i></span>
 		</div>

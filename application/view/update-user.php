@@ -24,8 +24,8 @@
 </div>
 <!-- ############# phone ############### -->
 <div id="container">
-<?php foreach ($phoneArr as $phone): ?>
-	<div class="row collapse" id="PhoneCollcetion">
+	<?php foreach ($phoneArr as $phone): ?>
+	<div class="row collapse PhoneCollcetion">
 		<div class="small-1 columns">
 			<span class="prefix"><i class="fa fa-phone"></i></span>
 		</div>
@@ -38,7 +38,7 @@
 			</a>
 		</div>
 	</div>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 </div>
 <!-- ############# street ############## -->
 <div class="row collapse">
@@ -49,7 +49,7 @@
 			</div>
 			<div class="small-10 columns">
 					<label>
-					<select name="city" id="city" required>
+					<select name="city" required>
 						<option value="<?=$city_id?>"><?=$city_name?></option>
 					</select>
 				</label>
@@ -63,7 +63,7 @@
 			</div>
 			<div class="small-10 columns">
 				<label>
-					<select name="street" id="street" required>
+					<select name="street" required>
 						<option value="<?=$street_id?>"><?=$street_name?></option>
 					</select>
 				</label>
