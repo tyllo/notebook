@@ -22,7 +22,7 @@ class Controller_Page extends Controller{
         //jQuery
         Help::set()->end('<script src="/js/jquery.min.js"></script>');
         // for foundation
-        Help::set()->head('<link rel="stylesheet" href="/css/foundation.css">');
+        //Help::set()->head('<link rel="stylesheet" href="/css/foundation.css">');
         Help::set()->end('<script src="/js/foundation.min.js"></script>');
         // for datetimepicker
         Help::set()->head('<link rel="stylesheet" href="/css/jquery.datetimepicker.css">');

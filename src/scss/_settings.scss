@@ -969,7 +969,7 @@ $block-grid-default-spacing: rem-calc(2);
 
 // We use these to control the background and border styles
 // $panel-bg: scale-color($white, $lightness: -5%);
-// $panel-border-style: solid;
+// $panel-border-style: none;
 // $panel-border-size: 1px;
 
 // We use this % to control how much we darken things on hover
@@ -977,8 +977,8 @@ $block-grid-default-spacing: rem-calc(2);
 // $panel-border-color: scale-color($panel-bg, $lightness: $panel-function-factor);
 
 // We use these to set default inner padding and bottom margin
-//$panel-margin-bottom: rem-calc(20);
-$panel-padding: rem-calc(5);
+// $panel-margin-bottom: rem-calc(20);
+// $panel-padding: rem-calc(5);
 
 // We use these to set default font colors
 // $panel-font-color: $oil;

@@ -25,6 +25,7 @@ class Model_Home extends Model{
         $query  = "SELECT
                         contact_id AS id,
                         contact_name AS name,
+                        avatar AS avatar,
                         contact_surname AS surname
                    FROM contact;";
         $result = $this->db->query($query);

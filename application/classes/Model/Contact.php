@@ -11,11 +11,12 @@ class Model_Contact extends Model{
     public function creat($contact){
         $query =
             "INSERT INTO contact
-                (contact_name, contact_surname, contact_patronymic, contact_date, street_id)
+                (contact_name, contact_surname, contact_patronymic, avatar, contact_date, street_id)
             VALUES (
                 '$contact[name]',
                 '$contact[surname]',
                 '$contact[patronymic]',
+                '$contact[avatar]',
                 '$contact[date]',
                  $contact[street]
             );"
@@ -24,7 +25,6 @@ class Model_Contact extends Model{
         $this->db->query($query);
         // если ошибка, то FALSE
         if ($this->db->error()) return FALSE;
-
         // добавим все телефоны контакта в таблицу phone
         // последний индефикатор id
         $contact_id = $this->db->insert_id();
@@ -54,6 +54,7 @@ class Model_Contact extends Model{
         $result = $this->db->query($query);
         // если ошибка, то FALSE
         if ($this->db->error()) return FALSE;
+        $phoneArr = [];
         while( $line = $result->fetch_assoc() )
             $phoneArr[] = $line['phone_number'];
         $arr['phoneArr'] = $phoneArr;
@@ -87,24 +88,26 @@ class Model_Contact extends Model{
             $result =  mysql_escape_string($result);
         endif;
         return $result;
-    }  
+    }
 		// return $_POST
     public function getPostContact(){
         // formate date
-        $date = $this->getPost('date');
-        $arr  = explode('/',$date);
-        $date = (count($arr) ==3)
-        ? (int)$arr[2].'-'.(int)$arr[1].'-'.(int)$arr[0]
-        : NULL;
+        // $date = $this->getPost('date');
+        // $arr  = explode('/',$date);
+        // $date = (count($arr) ==3)
+        // ? (int)$arr[2].'-'.(int)$arr[1].'-'.(int)$arr[0]
+        // : NULL;
+        $avatar = '/images/avatar/avatar-'.(int)$this->getPost('avatar').'.png';
 
         return [
            'name'       => $this->getPost('name'),
            'surname'    => $this->getPost('surname'),
            'patronymic' => $this->getPost('patronymic'),
+           'avatar'     => $avatar,
            'phone'      => $this->getPost('phone'),
            'city'       => (int)$this->getPost('city'),
            'street'     => (int)$this->getPost('street'),
-           'date'       => $date,
+           'date'       => $this->getPost('date'),
         ];
     }
 }

@@ -1,10 +1,11 @@
 @import "settings";
-@import "foundation";
+//@import "foundation";
 
-$topbar-breakpoint: #{lower-bound(9999px)}; // Change to 9999px for always mobile layout
-$topbar-media-query: $medium-up;
-$topbar-breakpoint: #{lower-bound($screen)};
-$topbar-media-query: "only screen";
+$thumb-border-style: none;
+
+
+// $panel-margin-bottom: rem-calc(20);
+$panel-padding: rem-calc(5);
 
 @import
     "foundation/components/block-grid",

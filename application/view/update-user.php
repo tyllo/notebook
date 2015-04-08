@@ -1,25 +1,25 @@
-<!-- show user -->
+<!-- update user -->
 <!-- ############# name ################ -->
 <div class="row collapse">
 	<div class="small-1 columns">
 		<span class="prefix"><i class="fa fa-user fa-fw"></i></span>
 	</div>
 	<div class="small-11 medium-3 columns">
-		<input name="name" type="text" placeholder="Имя" value="<?=$contact_name?>" required disabled>
+		<input name="name" type="text" placeholder="Имя" value="<?=$contact_name?>" required>
 	</div>
 
 	<div class="small-1 show-for-small columns">
 		<span class="prefix"><i class="fa fa-user"></i></span>
 	</div>
 	<div class="small-11 medium-4 columns">
-		<input name="surname" type="text" placeholder="Фамилия" value="<?=$contact_surname?>" required disabled>
+		<input name="surname" type="text" placeholder="Фамилия" value="<?=$contact_surname?>" required>
 	</div>
 
 	<div class="small-1 show-for-small columns">
 		<span class="prefix"><i class="fa fa-user"></i></span>
 	</div>
 	<div class="small-11 medium-4 columns">
-		<input name="patronymic" type="text" placeholder="Отчество" value="<?=$contact_patronymic?>" disabled>
+		<input name="patronymic" type="text" placeholder="Отчество" value="<?=$contact_patronymic?>">
 	</div>
 </div>
 <!-- ############# phone ############### -->
@@ -30,10 +30,10 @@
 			<span class="prefix"><i class="fa fa-phone"></i></span>
 		</div>
 		<div class="small-10 medium-10 columns">
-			<input name="phone[]" type="tel" placeholder="Телефон" value="<?=$phone?>" required disabled>
+			<input name="phone[]" type="tel" placeholder="Телефон" value="<?=$phone?>" required>
 		</div>
 		<div class="small-1 columns">
-			<a class="button postfix secondary add" href="#" disabled>
+			<a class="button postfix secondary add" href="#">
 				<i class="fa fa-minus"></i>
 			</a>
 		</div>
@@ -49,7 +49,7 @@
 			</div>
 			<div class="small-10 columns">
 					<label>
-					<select name="city" id="city" required disabled>
+					<select name="city" id="city" required>
 						<option value="<?=$city_id?>"><?=$city_name?></option>
 					</select>
 				</label>
@@ -63,7 +63,7 @@
 			</div>
 			<div class="small-10 columns">
 				<label>
-					<select name="street" id="street" required disabled>
+					<select name="street" id="street" required>
 						<option value="<?=$street_id?>"><?=$street_name?></option>
 					</select>
 				</label>
@@ -77,6 +77,12 @@
 		<span class="prefix"><i class="fa fa-calendar"></i></span>
 	</div>
 	<div class="small-10 medium-11 columns">
-		<input name="date" type="date" id="datetimepicker" value="<?=$contact_date?>" disabled>
+		<input name="date" type="date" id="datetimepicker" value="<?=$contact_date?>">
 	</div>
+</div>
+<!-- ############ button ############### -->
+<div class="row collapse">
+    <form style="display: inline-block" action="/contact/update/<?=$contact_id?>">
+        <input id='update' type="submit" class="button" value="Сохранить">
+    </form>
 </div>

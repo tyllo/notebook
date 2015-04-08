@@ -74,6 +74,7 @@ CREATE TABLE contact (
 	`contact_name`            VARCHAR(50)         NOT NULL,
 	`contact_surname`         VARCHAR(50)         NOT NULL,
 	`contact_patronymic`      VARCHAR(50)         NOT NULL,
+	`avatar`                  VARCHAR(255)        NOT NULL,
 	`contact_date`            DATE                DEFAULT NULL,
 	`street_id`               SMALLINT UNSIGNED   NOT NULL,
 

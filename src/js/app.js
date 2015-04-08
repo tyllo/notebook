@@ -5,7 +5,7 @@ $(document).foundation();
 $('#datetimepicker').datetimepicker({
     lang:'ru',
     timepicker:false,
-    format:'d/m/Y',
+    format:'Y-d-m',
     mask:true,
     closeOnDateSelect: 0,
     defaultDate:new Date(),
@@ -21,9 +21,9 @@ $('a.add').click(function(){
         return;
     }
     // клонируем форму с inpute type=phone
-    var clone = $('#PhoneCollcetion').clone(true);
     // и вставим в контейнер
-    $('#container').append(clone);
+    $('#PhoneCollcetion').clone(true)
+        .val(null).appendTo('#container');
     // удалим id оригинльного контейнера
     $('#PhoneCollcetion').removeAttr('id').off();
     // поменяем классы в a и иконки i с + на -
@@ -41,14 +41,14 @@ $('#street').attr('disabled','disabled');
 
     $('#city').change(function() {
     // информер о подгрузки улиц
-    var defaultOpt = $('#street option[value="default"]');
+    var defaultOpt = $('#street option[value=""]');
     $('#street').attr('disabled','disabled');
     // удалим всех потомков
     $('#street').children().remove();
     // и добавим default
-    $('#street').append('<option name="default">...</option>')
+    $('#street').append('<option value="">...</option>')
     // если default то ничего не делаем
-    if ($(this).val() ==='default') {
+    if ($(this).val() ==='') {
         $('#street').attr('disabled','disabled');
         $(defaultOpt).text('...');
         // выйдем
@@ -83,10 +83,11 @@ $('#street').attr('disabled','disabled');
 })
 
 ////////////////// contact/read/$id info //////////////////
+var idUser = '';
 $('a[data-id-user]').click(function(){
     // удалим ранее подгуженный contact
     $('#show-user').children().remove();
-    var idUser = $(this).attr('data-id-user');
+    idUser = $(this).attr('data-id-user');
     var url = '/contact/read/'+idUser;
     $.ajax({
         url: url,
@@ -99,4 +100,30 @@ $('a[data-id-user]').click(function(){
             $('#show-user').append('<h3>Не получилось загрузить,<br> ошибка на сервере</h3>');
         }
     })
+})
+
+////////////////// contact/update/$id info //////////////////
+$('#update').click(function(){
+    // удалим ранее подгуженный contact
+    $('#update-user').children().remove();
+    var url = '/contact/update/'+idUser;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        success: function(data){
+            // добавим полученный contact в модальное окно
+            $('#show-user').append(data);
+        },
+        error: function(data){
+            $('#show-user').append('<h3>Не получилось загрузить,<br> ошибка на сервере</h3>');
+        }
+    })
+})
+
+////////////////// contact/delete/$id info //////////////////
+$('#delete').click(function(){
+    var href = $(this).attr('href');
+    href = href + idUser;
+    $(this).attr('href',href);
+    alert(href);
 })

@@ -12,6 +12,7 @@ class Controller_Home extends Controller_Page{
         $this->view->content = View::View('content.php', [ 'contactArr' => $contactArr]);
         // добавим модальные окна в конец body
         $this->view->after  = View::View('modal-show-user.php');
+        $this->view->after .= View::View('modal-update-user.php');
         // получим список городов
         $cityArr = $this->model->getCity();
         $this->view->after .= View::View('modal-add-user.php', ['cityArr' => $cityArr]);
