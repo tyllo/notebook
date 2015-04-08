@@ -16,7 +16,7 @@
                   <li>
                     <label>
                         <img src="/images/avatar/avatar-1.png">
-                        <input type="radio" style="position: relative; bottom: 15px" name="avatar" value="/images/avatar/avatar-1.png">
+                        <input type="radio" checked="checked" style="position: relative; bottom: 15px" name="avatar" value="/images/avatar/avatar-1.png">
                     </label>
                   </li>
                     <?php $i=2; while($i<25):?>
@@ -44,7 +44,7 @@
                 <span class="prefix"><i class="fa fa-user"></i></span>
             </div>
             <div class="small-11 medium-4 columns">
-                <input name="surname" type="text" placeholder="Фамилия" required>
+                <input name="surname" type="text" placeholder="Фамилия">
             </div>
 
             <div class="small-1 show-for-small columns">
@@ -61,7 +61,7 @@
                     <span class="prefix"><i class="fa fa-phone"></i></span>
                 </div>
                 <div class="small-10 medium-10 columns">
-                    <input name="phone[]" type="tel" placeholder="Телефон">
+                    <input name="number[]" type="tel" placeholder="Телефон">
                 </div>
                 <div class="small-1 columns">
                     <a class="button postfix success add" href="#">
@@ -81,7 +81,7 @@
                             <label>
                             <select name="city" required>
                                 <option value="">...</option>
-                                <?php foreach ($cityArr as $city):?>
+                                <?php foreach ($citys as $city):?>
                                 <option value="<?=$city['id']?>"><?=$city['name']?></option>
                                 <?php endforeach;?>
                             </select>
@@ -110,7 +110,7 @@
                 <span class="prefix"><i class="fa fa-calendar"></i></span>
             </div>
             <div class="small-11 medium-10 columns">
-                <input name="date" type="date" class="datetimepicker">
+                <input name="bith" type="date" class="datetimepicker">
             </div>
         </div>
         <!-- ############ button ############### -->

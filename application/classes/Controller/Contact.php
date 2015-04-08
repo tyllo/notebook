@@ -44,7 +44,7 @@ class Controller_Contact extends Controller{
         $id = (int)Router::get('id');
 
         $contact = $this->model->getPostContact();
-print_r($contact);die();
+
         // обновим запись в базе
         $result = $this->model->update($contact, $id);
         // если ошибка

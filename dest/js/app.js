@@ -19,17 +19,18 @@ var getStreets = function(url, val='') {
         url: url,
         type: 'POST',
         success: function(data){
-            var streetArr = $.parseJSON(data);
+            var streets = $.parseJSON(data);
             // pars option string
             var result = '';
             // установим значение начального option
             $(defaultOpt).text('...');
-            $.each(streetArr, function(key,street){
+            $.each(streets, function(key,street){
                 // alert (value);
                 result = result +
                 '<option value="' + street.id + '">' + street.name + '</option>';
             });
             $('select[name="street"]').append(result);
+
             $('select[name="street"] option[value="' + val + '"]')
             .attr("selected", "selected");
             delete window.result;
@@ -119,19 +120,20 @@ $('a[data-id-user]').click(function(){
             // удалим кнопку
             $('#read-user div:last').remove();
             // добавим полученный contact в модальное окно
-            $('input[name="name"]').val(contact.contact_name);
-            $('input[name="surname"]').val(contact.contact_surname);
-            $('input[name="patronymic"]').val(contact.contact_patronymic);
+            $('input[name="name"]').val(contact.name);
+            $('input[name="surname"]').val(contact.surname);
+            $('input[name="patronymic"]').val(contact.patronymic);
             $('input[value="' + contact.avatar + '"]')
             .attr("checked", "checked");
-            $('input[name="date"]').val(contact.contact_date);
-            $('select[name="city"] option[value="' + contact.city_id + '"]')
+            $('input[name="bith"]').val(contact.bith);
+            $('select[name="city"] option[value="' + contact.cid + '"]')
             .attr("selected", "selected");
             // get streets from ajax and set
-            var url = '/get/street/' + contact.city_id;
-            $('select[name="street"]').append( getStreets(url,contact.street_id) );
+            var url = '/get/street/' + contact.cid;
+
+            $('select[name="street"]').append( getStreets(url, contact.sid) );
             // добавим телефоны
-            $.each(contact.phoneArr, function(key,val){
+            $.each(contact.numbers, function(key, val){
                 var clone = $(clonePhoneCollcetion).clone(true);
                 $(clone).find('a.add')
                     .removeClass('success')

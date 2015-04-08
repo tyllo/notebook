@@ -5,17 +5,18 @@
 //**************************************************
 
 // константа - корень приложения
-define('APP', realpath(__DIR__ . '/../../application'));
+if ( !defined('APP') ):
+	define('APP', realpath(__DIR__ . '/../../application'));
 
-// Подгрузим роутер с автоподгрузкой классов
-// еще он разбирает uri и сопоставляет валидному роуту
-// controller->action(), согласно ::set()
-include (
-	  APP . DIRECTORY_SEPARATOR
-	. 'system' . DIRECTORY_SEPARATOR
-	. 'Router.php'
-);
-
+	// Подгрузим роутер с автоподгрузкой классов
+	// еще он разбирает uri и сопоставляет валидному роуту
+	// controller->action(), согласно ::set()
+	include (
+			APP . DIRECTORY_SEPARATOR
+		. 'system' . DIRECTORY_SEPARATOR
+		. 'Router.php'
+	);
+endif;
 //**************************************************
 //                      begin
 //**************************************************
@@ -29,7 +30,7 @@ if ($db->connect_errno)
 
 // создадим database
 echo "Create database '$config[database]'.. ";
-$db->query("CREATE DATABASE IF NOT EXISTS `$config[database]`;");
+$db->query("CREATE DATABASE IF NOT EXISTS `$config[database]` CHARACTER SET=UTF8;");
 echo $db->error."\n";
 
 
@@ -37,15 +38,14 @@ echo "Select database '$config[database]'\n";
 $db->select_db($config['database']);
 echo $db->error."\n";
 
-
 // создадим таблицу city
 echo "Create table 'city'.. ";
 $db->query("
-CREATE TABLE city (
-	`city_id`                 SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
-	`city_name`               VARCHAR(50)         NOT NULL,
+CREATE TABLE IF NOT EXISTS city (
+	`cid`              SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
+	`cname`            VARCHAR(50)        NOT NULL,
 
-	PRIMARY KEY (city_id)
+	PRIMARY KEY (cid)
 ) ENGINE=InnoDB CHARACTER SET=UTF8;"
 );
 echo $db->error."\n";
@@ -53,13 +53,13 @@ echo $db->error."\n";
 // создадим таблицу street
 echo "Create table 'street'.. ";
 $db->query("
-CREATE TABLE street (
-	`street_id`               SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
-	`street_name`             VARCHAR(100)        NOT NULL,
-	`city_id`                 SMALLINT UNSIGNED   NOT NULL,
+CREATE TABLE IF NOT EXISTS street (
+	`sid`              SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
+	`sname`           VARCHAR(100)        NOT NULL,
+	`cid`         SMALLINT UNSIGNED   NOT NULL,
 
-	PRIMARY KEY (street_id),
-	FOREIGN KEY (city_id) REFERENCES city (city_id)
+	PRIMARY KEY (sid),
+	FOREIGN KEY (cid) REFERENCES city (cid)
 	ON UPDATE CASCADE
 	ON DELETE RESTRICT
 ) ENGINE=InnoDB CHARACTER SET=UTF8;"
@@ -69,33 +69,33 @@ echo $db->error."\n";
 // создадим таблицу contact
 echo "Create table 'contact'.. ";
 $db->query("
-CREATE TABLE contact (
-	`contact_id`              SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
-	`contact_name`            VARCHAR(50)         NOT NULL,
-	`contact_surname`         VARCHAR(50)         NOT NULL,
-	`contact_patronymic`      VARCHAR(50)         NOT NULL,
-	`avatar`                  VARCHAR(255)        NOT NULL,
-	`contact_date`            DATE                DEFAULT NULL,
-	`street_id`               SMALLINT UNSIGNED   NOT NULL,
+CREATE TABLE IF NOT EXISTS contact (
+	`id`              SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
+	`name`            VARCHAR(50)         NOT NULL,
+	`surname`         VARCHAR(50)         NOT NULL,
+	`patronymic`      VARCHAR(50)         NOT NULL,
+	`avatar`          VARCHAR(255)        NOT NULL,
+	`bith`            DATE                DEFAULT NULL,
+	`sid`             SMALLINT UNSIGNED   NOT NULL,
 
-	PRIMARY KEY (contact_id),
-	FOREIGN KEY (street_id) REFERENCES street (street_id)
+	PRIMARY KEY (id),
+	FOREIGN KEY (sid) REFERENCES street (sid)
 	ON UPDATE CASCADE
 	ON DELETE RESTRICT
 ) ENGINE=InnoDB CHARACTER SET=UTF8;"
 );
 echo $db->error."\n";
 
-// создадим таблицу phone
-echo "Create table 'phone'.. ";
+// создадим таблицу number
+echo "Create table 'number'.. ";
 $db->query("
-CREATE TABLE phone (
-	`phone_id`                SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
-	`phone_number`            VARCHAR(50),
-	`contact_id`              SMALLINT UNSIGNED   NOT NULL,
+CREATE TABLE IF NOT EXISTS number (
+	`nid`             SMALLINT UNSIGNED   NOT NULL        AUTO_INCREMENT,
+	`number`          VARCHAR(50),
+	`id`              SMALLINT UNSIGNED   NOT NULL,
 
-	PRIMARY KEY (phone_id),
-	FOREIGN KEY (contact_id) REFERENCES contact (contact_id)
+	PRIMARY KEY (nid),
+	FOREIGN KEY (id) REFERENCES contact (id)
 	ON UPDATE CASCADE
 	ON DELETE RESTRICT
 ) ENGINE=InnoDB CHARACTER SET=UTF8;"
@@ -103,4 +103,13 @@ CREATE TABLE phone (
 echo $db->error."\n";
 
 // закончим работать с базой
-$db->close();
+// $db->close();
+
+// теперь добавим данные в таблицы
+// street и sity
+
+$argc   = 2;
+$argv[] = 'database'; 
+include ('grabber.php');
+
+

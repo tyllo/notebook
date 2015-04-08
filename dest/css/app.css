@@ -3428,6 +3428,10 @@ ul.off-canvas-list {
   margin-right: 0.5rem;
   display: inline; }
 
+body {
+  background: #ebebeb;
+  background-image: url(http://docs.sencha.com/extjs/4.2.1/extjs-build/examples/build/KitchenSink/ext-theme-neptune/resources/images/square.gif); }
+
 .hide-text {
   width: auto;
   white-space: nowrap;

@@ -11,54 +11,26 @@ class Model_Contact extends Model{
     public function creat($contact){
         $query =
             "INSERT INTO contact
-                (contact_name, contact_surname, contact_patronymic, avatar, contact_date, street_id)
+                (name, surname, patronymic, avatar, bith, sid)
             VALUES (
                 '$contact[name]',
                 '$contact[surname]',
                 '$contact[patronymic]',
                 '$contact[avatar]',
-                '$contact[date]',
-                 $contact[street]
+                '$contact[bith]',
+                 $contact[sid]
             );"
         ;
         // добавим запись
         $this->db->query($query);
         // если ошибка, то FALSE
         if ($this->db->error()) return FALSE;
-        // добавим все телефоны контакта в таблицу phone
+        // добавим все телефоны контакта в таблицу number
         // последний индефикатор id
-        $contact_id = $this->db->insert_id();
-        foreach($contact['phone'] as $phone):
-            $query ="INSERT INTO phone (phone_number, contact_id)
-                     VALUES ('$phone','$contact_id')";
-            $this->db->query($query);
-            if ($this->db->error()) return FALSE;
-        endforeach;
-        return TRUE;
-    }
-    // обновить инфу о контакте
-    public function update($contact, $id){
-        $query =
-            "UPDATE contact SET
-                contact_name       = '$contact[name]',
-                contact_surname    = '$contact[surname]',
-                contact_patronymic = '$contact[patronymic]',
-                avatar             = '$contact[avatar]',
-                contact_date       = '$contact[date]',
-                street_id          = '$contact[street]'
-            WHERE contact_id       = '$id'
-            ;"
-        ;
-        // обновим запись
-        $this->db->query($query);
-        // если ошибка, то FALSE
-        if ($this->db->error()) return FALSE;
-        // обновим все телефоны контакта в таблицу phone
-        // последний индефикатор id
-        $contact_id = $this->db->insert_id();
-        foreach($contact['phone'] as $phone):
-            $query ="INSERT INTO phone (phone_number, contact_id)
-                     VALUES ('$phone','$contact_id')";
+        $id = $this->db->insert_id();
+        foreach($contact['number'] as $number):
+            $query ="INSERT INTO number (number, id)
+                     VALUES ('$number','$id')";
             $this->db->query($query);
             if ($this->db->error()) return FALSE;
         endforeach;
@@ -66,35 +38,67 @@ class Model_Contact extends Model{
     }
     // get info контакте
     public function read($id){
-        $query  = "SELECT * FROM contact  AS table1 INNER JOIN street USING (street_id)";
-        $query  = "SELECT * FROM ($query) AS table2 INNER JOIN city   USING (city_id)";
-        $query  = "$query WHERE contact_id='$id'";
+        $query  = "SELECT * FROM contact  AS table1 INNER JOIN street USING (sid)";
+        $query  = "SELECT * FROM ($query) AS table2 INNER JOIN city   USING (cid)";
+        $query  = "$query WHERE id='$id';";
         $result = $this->db->query($query);
         // если ошибка, то FALSE
         if ($this->db->error()) return FALSE;
         // результат это одна строка
         $arr = $result->fetch_assoc();
 
-        // отдельным запросом получим phone
-        $query  = "SELECT phone_number FROM phone WHERE contact_id='$id'";
+        // отдельным запросом получим number
+        $query  = "SELECT number FROM number WHERE id='$id'";
         $result = $this->db->query($query);
         // если ошибка, то FALSE
+
         if ($this->db->error()) return FALSE;
-        $phoneArr = [];
+        $numbers = [];
         while( $line = $result->fetch_assoc() )
-            $phoneArr[] = $line['phone_number'];
-        $arr['phoneArr'] = $phoneArr;
+            $numbers[] = $line['number'];
+        $arr['numbers'] = $numbers;
         return $arr;
+    }
+    // обновить инфу о контакте
+    public function update($contact, $id){
+        $query =
+            "UPDATE contact SET
+                name       = '$contact[name]',
+                surname    = '$contact[surname]',
+                patronymic = '$contact[patronymic]',
+                avatar     = '$contact[avatar]',
+                bith       = '$contact[bith]',
+                sid        = '$contact[sid]'
+            WHERE id       = '$id'
+            ;"
+        ;
+        // обновим запись
+        $this->db->query($query);
+        // если ошибка, то FALSE
+        if ($this->db->error()) return FALSE;
+        // сначало удалим все номера конакта id
+        $query ="DELETE FROM number WHERE id='$id';";
+        $this->db->query($query);
+        if ($this->db->error()) return FALSE;
+        // обновим все телефоны контакта в таблицу number
+        foreach($contact['number'] as $number):
+            // если номер пустой, пропускаем
+            //if (!$number) break;
+            $query ="INSERT INTO number (id, number) VALUES ('$id','$number');";
+            $this->db->query($query);
+            if ($this->db->error()) return FALSE;
+        endforeach;
+        return TRUE;
     }
     // удалить контакт
     public function delete($id){
         // удалим все телефоны контакта $id
-        $query =" DELETE FROM phone WHERE contact_id = '$id';";
+        $query =" DELETE FROM number WHERE id = '$id';";
         $this->db->query($query);
         // если ошибка, то FALSE
         if ($this->db->error()) return FALSE;
         // удалим контакт $id
-        $query =" DELETE FROM contact WHERE contact_id = '$id';";
+        $query =" DELETE FROM contact WHERE id = '$id';";
         $this->db->query($query);
         // если ошибка, то FALSE
         if ($this->db->error()) return FALSE;
@@ -117,22 +121,20 @@ class Model_Contact extends Model{
     }
 	// return $_POST
     public function getPostContact(){
-        // formate date
-        // $date = $this->getPost('date');
-        // $arr  = explode('/',$date);
-        // $date = (count($arr) ==3)
-        // ? (int)$arr[2].'-'.(int)$arr[1].'-'.(int)$arr[0]
-        // : NULL;
-
+        // аватар по умолчанию
+        $avatar = $this->getPost('avatar');
+        $avatar = ($avatar)
+            ? $avatar
+            : htmlspecialchars('/images/avatar/avatar-1.png');
         return [
            'name'       => $this->getPost('name'),
            'surname'    => $this->getPost('surname'),
            'patronymic' => $this->getPost('patronymic'),
            'avatar'     => $this->getPost('avatar'),
-           'phone'      => $this->getPost('phone'),
-           'city'       => (int)$this->getPost('city'),
-           'street'     => (int)$this->getPost('street'),
-           'date'       => $this->getPost('date'),
+           'number'     => $this->getPost('number'),
+           'cid'        => (int)$this->getPost('city'),
+           'sid'        => (int)$this->getPost('street'),
+           'bith'       => $this->getPost('bith'),
         ];
     }
 }

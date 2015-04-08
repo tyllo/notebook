@@ -47,6 +47,11 @@ $panel-padding: rem-calc(5);
 //   "foundation/components/tooltips",
 //   "foundation/components/top-bar";
 
+body {
+    background:#ebebeb;
+    background-image: url(''data:image/gif;base64,R0lGODdhFAAUAIACAOfn5/Hx8SwAAAAAFAAUAAACJoSPiaGt7CKAstGaLj56T5+Bi8iRRrehmFqxkhvBjmyZU4Dn+r4XADs=');
+}
+
 .hide-text{
     width:auto;
     white-space: nowrap;

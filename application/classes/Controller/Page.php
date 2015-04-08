@@ -40,15 +40,15 @@ class Controller_Page extends Controller{
         $this->view->before = View::View('navigation.php');
 
         // получим список всех юзеров
-        $contactArr = $this->model->getContacts();
+        $contacts = $this->model->getContacts();
         // здесь у нас основой контент страницы
-        $this->view->content = View::View('content.php', [ 'contactArr' => $contactArr]);
+        $this->view->content = View::View('contacts.php', [ 'contacts' => $contacts]);
 
         // добавим модальные окна в конец body
         $this->view->after  = View::View('modal-read-user.php');
         // получим список городов
-        $cityArr = $this->model->getCity();
-        $this->view->after .= View::View('modal-creat-user.php', ['cityArr' => $cityArr]);
+        $citys = $this->model->getCity();
+        $this->view->after .= View::View('modal-creat-user.php', ['citys' => $citys]);
     }
     function action_getStreet(){
         // установим пустой шаблон
@@ -56,12 +56,12 @@ class Controller_Page extends Controller{
         // получим id запрашиваемого города
         $id = (int)Router::get('id');
         // получим список улиц
-        $streetJSON = $this->model->getStreet($id);
+        $streetsJSON = $this->model->getStreet($id);
         // если id не соответсвует ни один город
-        if($streetJSON === false):
+        if($streetsJSON === false):
             $e = new Exception404();
             $e->start($id);
         endif;
-        $this->view->content = $streetJSON;
+        $this->view->content = $streetsJSON;
     }
 }
