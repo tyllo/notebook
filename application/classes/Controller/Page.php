@@ -15,6 +15,8 @@ class Controller_Page extends Controller{
             'after',           // для вставки после контента
             'end'              // для вставки в самый конец body
         ]);
+        // добавим стили и скрипты на страницу
+
         // по умолчанию в head для page
         Help::set()->head('<link rel="stylesheet" href="/css/font-awesome.css">');
         Help::set()->head('<script src="/js/modernizr.js"></script>');
@@ -32,13 +34,34 @@ class Controller_Page extends Controller{
         // мои скрипты и стили
         Help::set()->head('<link rel="stylesheet" href="/css/app.css" />');
         Help::set()->end('<script src="/js/app.js"></script>');
-
+    }
+    public function action_index(){
         // здесь у нас все что до основного контента
         $this->view->before = View::View('navigation.php');
+
+        // получим список всех юзеров
+        $contactArr = $this->model->getContacts();
         // здесь у нас основой контент страницы
-        $this->view->content = View::View('content.php');
+        $this->view->content = View::View('content.php', [ 'contactArr' => $contactArr]);
+
         // добавим модальные окна в конец body
-        $this->view->after  = View::View('modal-show-user.php');
-        $this->view->after .= View::View('modal-add-user.php');
+        $this->view->after  = View::View('modal-read-user.php');
+        // получим список городов
+        $cityArr = $this->model->getCity();
+        $this->view->after .= View::View('modal-creat-user.php', ['cityArr' => $cityArr]);
+    }
+    function action_getStreet(){
+        // установим пустой шаблон
+        $this->layout = 'layouts/clean.php';
+        // получим id запрашиваемого города
+        $id = (int)Router::get('id');
+        // получим список улиц
+        $streetJSON = $this->model->getStreet($id);
+        // если id не соответсвует ни один город
+        if($streetJSON === false):
+            $e = new Exception404();
+            $e->start($id);
+        endif;
+        $this->view->content = $streetJSON;
     }
 }

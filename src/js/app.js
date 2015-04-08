@@ -82,7 +82,7 @@ $('select[name="city"]').change(function() {
         return;
     };
     $(defaultOpt).text('Загрузка улиц...');
-    var url = '/form/get/city/'+$(this).val();
+    var url = '/get/street/'+$(this).val();
     //запрос ajax
    $('select[name="street"]').append( getStreets(url) );
 });
@@ -128,7 +128,7 @@ $('a[data-id-user]').click(function(){
             $('select[name="city"] option[value="' + contact.city_id + '"]')
             .attr("selected", "selected");
             // get streets from ajax and set
-            var url = '/form/get/city/' + contact.city_id;
+            var url = '/get/street/' + contact.city_id;
             $('select[name="street"]').append( getStreets(url,contact.street_id) );
             // добавим телефоны
             $.each(contact.phoneArr, function(key,val){
