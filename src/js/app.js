@@ -12,6 +12,9 @@ function datetimepickerset(){
         dayOfWeekStart: 1,
     });
 };
+////////////// format phone number ///////////////////
+$('input[type="tel"]').mask('9 (999) 999-9999');
+
 ///////////////// set street from server ////////////
 var getStreets = function(url, val='') {
     var defaultOpt = $('select[name="street"] option[value=""]');
@@ -52,6 +55,8 @@ $('a.add').click(function(){
     }
     // вставим клонированный phone в контейнер
     $(clonePhoneCollcetion).clone(true).appendTo('.container-phone');
+    // format phone number
+    $('input[type="tel"]').mask('9 (999) 999-9999');
     // поменяем классы в a и иконки i с + на -
     $(this)
         .removeClass('success')
@@ -91,6 +96,7 @@ $('a[data-reveal-id="modal-creat-user"]').click(function(){
     $('form[name="creat-user"]').children().remove();
     $(cloneCreatForm).clone(true)
         .appendTo('form[name="creat-user"]');
+        $('input[type="tel"]').mask('9 (999) 999-9999');
     // навешиваем обработчик даты datetimepicker
     datetimepickerset();
 });
@@ -113,6 +119,7 @@ $('a[data-id-user]').click(function(){
             var contact = $.parseJSON(data);
             // вставим чистый клон
             $(cloneCreatForm).clone(true).appendTo('#read-user');
+            $('input[type="tel"]').mask('9 (999) 999-9999');
             // навешиваем обработчик даты datetimepicker
             datetimepickerset();
             // удалим кнопку
@@ -141,6 +148,8 @@ $('a[data-id-user]').click(function(){
                     .addClass('fa-minus');
                 $(clone).find('input[type="tel"]').val(val);
                 $(clone).prependTo('.container-phone');
+                // format phone number
+                $('input[type="tel"]').mask('9 (999) 999-9999');
             });
         },
         error: function(data){
@@ -168,3 +177,5 @@ var idUser = '';
 var cloneCreatForm = $('form[name="creat-user"]').children().clone(true);
 // экземпляр input name=phone
 var clonePhoneCollcetion = $('.phoneCollcetion').clone(true);
+
+$('input[type="tel"]').mask('9 (999) 999-9999');

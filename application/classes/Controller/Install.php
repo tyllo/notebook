@@ -28,9 +28,8 @@ class Controller_Install extends Controller{
         // for datetimepicker
         Help::set()->head('<link rel="stylesheet" href="/css/jquery.datetimepicker.css">');
         Help::set()->end('<script src="/js/jquery.datetimepicker.js"></script>');
-        // for croper
-        //Help::set()->head('<link rel="stylesheet" href="/css/cropper.min.css">');
-        //Help::set()->end('<script src="/js/cropper.min.js"></script>');
+        // for format input phone number
+        Help::set()->end('<script src="/js/jquery.maskedinput.min.js"></script>');
         // мои скрипты и стили
         Help::set()->head('<link rel="stylesheet" href="/css/app.css" />');
         Help::set()->end('<script src="/js/app.js"></script>');

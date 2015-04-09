@@ -55,12 +55,9 @@ gulp.task('components/font-awesome', function() {
 		.pipe(gulp.dest('dest/fonts/'))
 		.on('error', console.log);
 });
-gulp.task('components/cropper', function() {
-	var src = 'bower_components/cropper/dist';
-	gulp.src(src + '/cropper.min.css')
-		.pipe(gulp.dest('dest/css/'))
-		.on('error', console.log);
-	gulp.src(src + '/cropper.min.js')
+gulp.task('components/jquery-maskedinput', function() {
+	var src = 'bower_components/jquery-maskedinput/dist';
+	gulp.src(src + '/jquery.maskedinput.min.js')
 		.pipe(gulp.dest('dest/js/'))
 		.on('error', console.log);
 });
@@ -81,9 +78,9 @@ gulp.task('build', function() {
   gulp.run('components/datetimepicker');
   gulp.run('components/jquery');
   gulp.run('components/modernizr');
-  //gulp.run('components/foundation');
+  gulp.run('components/foundation');
 	gulp.run('components/font-awesome');
-	//gulp.run('components/cropper');
+	gulp.run('components/jquery-maskedinput');
 	gulp.run('src');
 });
 
