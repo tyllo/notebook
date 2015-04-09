@@ -19,6 +19,13 @@ set_include_path(get_include_path()
     . DIRECTORY_SEPARATOR
 );
 
+// файл-флаг, в нем роут для инсталяции базы данных
+// после установки его нужно удалить или переименовать
+$file = __DIR__ . DIRECTORY_SEPARATOR . 'install.php';
+if (file_exists($file)) include ($file);
+
+
+
 // регистрируем route для основной страницы
 Router::set('Page', '', [
     'controller' => 'Page',

@@ -27,16 +27,44 @@ $db = new mysqli($config['host'], $config['username'], $config['password']);
 if ($db->connect_errno)
 	die("Не удалось подключиться: {$db->connect_error}\n");
 
-
 // создадим database
-echo "Create database '$config[database]'.. ";
+//echo "Create database '$config[database]'.. ";
 $db->query("CREATE DATABASE IF NOT EXISTS `$config[database]` CHARACTER SET=UTF8;");
-echo $db->error."\n";
+if ($db->error) return FALSE;
 
 
-echo "Select database '$config[database]'\n";
+//echo "Select database '$config[database]'\n";
 $db->select_db($config['database']);
-echo $db->error."\n";
+if ($db->error) return FALSE;
+
+
+// фаил с таблицами и данными для city и street
+$file = APP . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'database.sql';
+if (!file_exists($file)) return;
+
+// тупо целиком пытаемся запихнуть файл в базу
+// благо размер ее мы знаем
+$sql = file_get_contents($file);
+// разобьем $sql на запросы
+$sql = explode(";", $sql);
+
+foreach($sql as $query):
+	$db->query($query);
+	if ($db->error) return FALSE;
+endforeach;
+
+$db->close();
+return TRUE;
+//*****************************************************
+/////// все что дальше - не нужно!!!
+/////// - было сделано для рабоы из командной строки
+///////////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+
+
+
+
+
 
 // создадим таблицу city
 echo "Create table 'city'.. ";
@@ -108,8 +136,9 @@ echo $db->error."\n";
 // теперь добавим данные в таблицы
 // street и sity
 
-$argc   = 2;
-$argv[] = 'database'; 
-include ('grabber.php');
+// $argc   = 2;
+// $argv[] = 'database';
+// include ('grabber.php');
+
 
 

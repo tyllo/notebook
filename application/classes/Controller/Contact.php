@@ -24,6 +24,7 @@ class Controller_Contact extends Controller{
             $e = new Exception404('Ошибка записи контакта');
             $e->start();
         endif;
+				// редирект на корень
         header("Location: http://".$_SERVER['HTTP_HOST']."/");
     }
     // read contact

@@ -3,7 +3,6 @@
 
 $thumb-border-style: none;
 
-
 // $panel-margin-bottom: rem-calc(20);
 $panel-padding: rem-calc(5);
 
@@ -17,7 +16,9 @@ $panel-padding: rem-calc(5);
     "foundation/components/thumbs",
     "foundation/components/top-bar",
     "foundation/components/visibility",
-    "foundation/components/offcanvas";
+    "foundation/components/offcanvas",
+    "foundation/components/keystrokes",
+    "foundation/components/alert-boxes";
 
 // Or selectively include components
 // @import
@@ -31,7 +32,6 @@ $panel-padding: rem-calc(5);
 //   "foundation/components/flex-video",
 //   "foundation/components/inline-lists",
 //   "foundation/components/joyride",
-//   "foundation/components/keystrokes",
 //   "foundation/components/labels",
 //   "foundation/components/magellan",
 //   "foundation/components/orbit",
@@ -49,7 +49,7 @@ $panel-padding: rem-calc(5);
 
 body {
     background:#ebebeb;
-    background-image: url(''data:image/gif;base64,R0lGODdhFAAUAIACAOfn5/Hx8SwAAAAAFAAUAAACJoSPiaGt7CKAstGaLj56T5+Bi8iRRrehmFqxkhvBjmyZU4Dn+r4XADs=');
+    background-image: url('data:image/gif;base64,R0lGODdhFAAUAIACAOfn5/Hx8SwAAAAAFAAUAAACJoSPiaGt7CKAstGaLj56T5+Bi8iRRrehmFqxkhvBjmyZU4Dn+r4XADs=');
 }
 
 .hide-text{

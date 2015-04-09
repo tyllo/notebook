@@ -64,8 +64,6 @@ $('a.add').click(function(){
 ////////////// for city input ////////////////////
 // деактивируем поле street
 $('select[name="street"]').attr('disabled','disabled');
-// активируем поле city - WAF? O_o
-$('select[name="city"]').removeAttr('disabled');
 
 $('select[name="city"]').change(function() {
     // информер о подгрузки улиц

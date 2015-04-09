@@ -36,8 +36,10 @@ class Controller_Page extends Controller{
         Help::set()->end('<script src="/js/app.js"></script>');
     }
     public function action_index(){
+        // кнопка модального окна
+        $topBare = View::View('top-bare.php');
         // здесь у нас все что до основного контента
-        $this->view->before = View::View('navigation.php');
+        $this->view->before = View::View('navigation.php', ['topBare' => $topBare]);
 
         // получим список всех юзеров
         $contacts = $this->model->getContacts();

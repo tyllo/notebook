@@ -84,7 +84,7 @@ class Router {
             // contact/read/23
             $uriArr     = explode('/', self::$uri);
             foreach($patternArr as $key => $value)
-                if ( isset($uriArr[$key]) )
+                if ( isset($uriArr[$key])&&$uriArr[$key] )
                     self::$route[$value] = $uriArr[$key];
         endif;
    }
