@@ -1,0 +1,8 @@
+DirectoryIndex /dest/
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.+) $1 [L]
+RewriteCond %{DOCUMENT_ROOT}/dest%{REQUEST_URI} -f
+RewriteRule ^(.+) /dest/$1 [L]
+
+RewriteRule ^(.*)$ /dest/ [QSA,L]

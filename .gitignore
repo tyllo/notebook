@@ -1,0 +1,9 @@
+/bower_components/*
+/node_modules/*
+npm-debug.log
+project.sublime-workspace
+project.sublime-project
+application/config/db.php
+
+src/scss
+!src/scss/app.scss
