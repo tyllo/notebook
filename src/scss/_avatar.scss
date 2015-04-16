@@ -1,0 +1,44 @@
+
+$primary-color: #008CBA;
+$secondary-color: #e7e7e7;
+
+// url для аватаров
+@mixin url-avatar($i) {
+  background-image: url(../images/avatar-svg/avatar-#{$i}.svg);
+}
+
+@for $i from 1 through 24 {
+  .avatar-#{$i}{
+      width: auto;
+      @include url-avatar($i);
+      background-repeat: no-repeat;
+      background-position: 0 0;
+  }
+}
+
+// расстояние между li
+#avatar [class*="block-grid-"] > li
+{
+    padding: 0px 0.625rem 0.2rem;
+}
+
+// скрываем радиобаттон для кастомизации
+#avatar input[type="radio"]
+{
+    display:none;
+}
+
+// выбранный элемент
+#avatar input[type=radio]:checked + [class*="avatar-"]{
+    border: 2px solid $primary-color;
+    background-color: $primary-color;
+}
+
+#avatar [class*="avatar-"]
+{
+    &:hover
+    {
+        border: 2px solid $primary-color;
+        background-color: $secondary-color;
+    }
+}

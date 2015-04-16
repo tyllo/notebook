@@ -1,0 +1,44 @@
+
+// меняем дефолтные значение из foundation/settings
+
+$thumb-border-style: none;
+$panel-padding: rem-calc(5);
+
+// подгрузим стили только тех блоков foundation,
+// что мы используем в приложении
+@import
+    "normalize",
+    "foundation/settings",
+    "foundation/components/grid",
+    "foundation/components/block-grid",
+    "foundation/components/forms",
+    "foundation/components/buttons",
+    "foundation/components/panels",
+    "foundation/components/reveal",
+    "foundation/components/thumbs",
+    "foundation/components/top-bar",
+    "foundation/components/visibility",
+    "foundation/components/offcanvas",
+    "foundation/components/keystrokes",
+    "foundation/components/alert-boxes";
+
+// подключим стили аватаров
+@import "avatar";
+
+body {
+    background:#ebebeb;
+    background-image: url('data:image/gif;base64,R0lGODdhFAAUAIACAOfn5/Hx8SwAAAAAFAAUAAACJoSPiaGt7CKAstGaLj56T5+Bi8iRRrehmFqxkhvBjmyZU4Dn+r4XADs=');
+}
+
+.hide-text{
+    width:auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8em;
+    display: block;
+}
+
+li{
+  line-height: 1.3;
+}
