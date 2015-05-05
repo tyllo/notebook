@@ -19,9 +19,9 @@ class Router {
 
     private function __construct(){
         // если CLI
-				if ( ! isset($_SERVER['HTTP_HOST']) ) return;
+                if ( ! isset($_SERVER['HTTP_HOST']) ) return;
         // Парсим uri
-				$arr = parse_url(strtolower("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']));
+                $arr = parse_url(strtolower("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']));
         $query = array_key_exists('query', $arr) ? $arr['query'] : NULL;
         $uri = trim($arr['path'],'/');
 
@@ -33,19 +33,19 @@ class Router {
     }
     private function __clone(){}
     private function __wakeup(){}
-    static public function getInstance() {
+    public static function getInstance() {
         if (is_null(self::$instance))
             self::$instance = new self;
         return self::$instance;
     }
     // автолоадеры классов относительно корня приложения
-    public function setAutoloader($path){
+    public static function setAutoloader($path){
         // classes\controller => Classes/Controller
         $path = trim($path,'/');
         $path = trim($path,'\\');
         $path = str_replace('/', ' ' , $path);
         $path = str_replace('\\', ' ' , $path);
-        $path = ucwords($path);
+        //$path = ucwords($path);
         $path = str_replace(' ', DIRECTORY_SEPARATOR , $path);
 
         spl_autoload_register(function ($className) use($path){
@@ -60,8 +60,8 @@ class Router {
             if (file_exists($filename)) include ($filename);
         });
     }
-   // здесь сопоставим uri свои controller и action
-   static public function set($name, $path, $arr=[]) {
+    // здесь сопоставим uri свои controller и action
+    public static function set($name, $path, $arr=[]) {
         // 'user/(creat|read)' => '/user\/(creat|read)/i'
         $path = str_replace('/', '\/' , $path);
         preg_match( '/^'.$path.'$/i', self::$uri, $matches);
@@ -89,7 +89,7 @@ class Router {
         endif;
    }
     // запускает controller->action();
-   static public function start() {
+    public static function start() {
         $route = & self::$route;
         // если нет роута
         if ($route==[]):
@@ -112,11 +112,11 @@ class Router {
         $controller->$actionName();
         $controller->after();
    }
-   // внешний доступ к свойсвам self::$route
-	 // нужно для доступа к таким параметрам из
-	 // pattern где рендерятся соответствия 
-	 // controller/action/id => [controller, action, id]
-   static public function get($key){
+    // внешний доступ к свойсвам self::$route
+    // нужно для доступа к таким параметрам из
+    // pattern где рендерятся соответствия 
+    // controller/action/id => [controller, action, id]
+    public static function get($key){
         return isset(self::$route[$key])
             ? self::$route[$key] : NULL;
     }

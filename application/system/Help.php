@@ -13,7 +13,7 @@ class Help {
     private function __construct(){}
     private function __clone(){}
     private function __wakeup(){}
-    static public function getInstance() {
+    public static function getInstance() {
         if (is_null(self::$instance))
             self::$instance = new self;
         return self::$instance;
@@ -24,7 +24,7 @@ class Help {
         //self::$_data[$key] = self::$_data[$key] . "\n" . $str;
     }
     // $prefix - добавить табы перед \n
-    public function get($key=NULL){
+    public static function get($key=NULL){
         self::$method = 'get';
         return self::getInstance();
     }
@@ -43,7 +43,7 @@ class Help {
         self::$method = NULL;
     }
     // добавляем ключи в $_data
-    public function register($arr){
+    public static function register($arr){
         $arr = (array)$arr;
         foreach ($arr as $key):
             $key = strtolower($key);

@@ -56,8 +56,12 @@ var getStreets = function(url, val) {
     })
 };
 ///////////// add new phone input ////////////////
-$('a.add:enabled').click(function(){
-    if( $(this).hasClass('alert') ){
+$('a.add').click(function(e){
+	e.preventDefault();
+	if( $(this).attr('disabled') == 'disabled' ){
+		return;
+	};
+	if( $(this).hasClass('alert') ){
         // удалим input phone
         //  двойной parent - плохо ((
         $(this).parent().parent().remove();
@@ -102,19 +106,19 @@ $('select[name="city"]').change(function() {
 });
 
 ///////////////// contact/creat/ ////////////////////
-$('a[data-reveal-id="modal-creat-user"]').click(function(){
-    $('form[name="creat-user"]').children().remove();
+$('a[data-reveal-id="modal-creat-user"]').click(function(e){
+    e.preventDefault();
+	$('form[name="creat-user"]').children().remove();
     $(cloneCreatForm).clone(true)
         .appendTo('form[name="creat-user"]');
     $('input[type="tel"]').mask('9 (999) 999-9999');
     // навешиваем обработчик даты datetimepicker
     datetimepickerset();
 });
-
-
 ///////////////// contact/read ////////////////////
-$('a[data-id-user]').click(function(){
-    /// спрячем кнопку
+$('a[data-id-user]').click(function(e){
+    e.preventDefault();
+	/// спрячем кнопку
     $('input[type="submit"]').hide();
     $('#update').show();
     // удалим ранее подгуженный contact
@@ -184,8 +188,9 @@ $('a[data-id-user]').click(function(){
     })
 });
 /////////////// contact/update/$id ////////////////
-$('#update').click(function(){
-    $(this).hide();
+$('#update').click(function(e){
+    e.preventDefault();
+	$(this).hide();
     // а теперь активируем все инпуты
     $('input').removeAttr('disabled');
     $('select').removeAttr('disabled');
@@ -194,8 +199,9 @@ $('#update').click(function(){
     $('.avatar').show();
 });
 /////////////// contact/delete/$id /////////////////
-$('#delete').click(function(){
-    var href = $(this).attr('href');
+$('#delete').click(function(e){
+    e.preventDefault();
+	var href = $(this).attr('href');
     href = href + idUser;
     $(this).attr('href',href);
 });
