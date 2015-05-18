@@ -127,5 +127,5 @@ Router::getInstance();
 
 // Зарегестрируем пути для поиска классов
 Router::setAutoloader('classes');
-Router::setAutoloader('classes/exception');
+Router::setAutoloader('classes/Exception');
 Router::setAutoloader('system');

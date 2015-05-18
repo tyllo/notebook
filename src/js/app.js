@@ -9,15 +9,15 @@ var idUser = '';
 //////////////// for calendar input //////////////
 // http://xdsoft.net/jqplugins/datetimepicker/
 function datetimepickerset(){
-    $('.datetimepicker').datetimepicker({
-        lang:'ru',
-        timepicker:false,
-        format:'Y-m-d',
-        mask:true,
-        closeOnDateSelect: 0,
-        defaultDate:new Date(),
-        dayOfWeekStart: 1,
-    });
+  $('.datetimepicker').datetimepicker({
+    lang:'ru',
+    timepicker:false,
+    format:'Y-m-d',
+    mask:true,
+    closeOnDateSelect: 0,
+    defaultDate:new Date(),
+    dayOfWeekStart: 1,
+  });
 };
 
 ////////////// format phone number ///////////////////
@@ -85,36 +85,37 @@ $('a.add').click(function(e){
 $('select[name="street"]').attr('disabled','disabled');
 
 $('select[name="city"]').change(function() {
-    // информер о подгрузки улиц
-    var defaultOpt = $('select[name="street"] option[value=""]');
+  // информер о подгрузки улиц
+  var defaultOpt = $('select[name="street"] option[value=""]');
+  $('select[name="street"]').attr('disabled','disabled');
+  // удалим всех потомков
+  $('select[name="street"]').children().remove();
+  // и добавим default
+  $('select[name="street"]').append('<option value="">...</option>');
+  // если default то ничего не делаем
+  if ($(this).val() ==='') {
     $('select[name="street"]').attr('disabled','disabled');
-    // удалим всех потомков
-    $('select[name="street"]').children().remove();
-    // и добавим default
-    $('select[name="street"]').append('<option value="">...</option>');
-    // если default то ничего не делаем
-    if ($(this).val() ==='') {
-        $('select[name="street"]').attr('disabled','disabled');
-        $(defaultOpt).text('...');
-        // выйдем
-        return;
-    };
-    $(defaultOpt).text('Загрузка улиц...');
-    var url = '/get/street/'+$(this).val();
-    //запрос ajax
-   $('select[name="street"]').append( getStreets(url) );
+    $(defaultOpt).text('...');
+    // выйдем
+    return;
+  };
+  $(defaultOpt).text('Загрузка улиц...');
+  var url = '/get/street/'+$(this).val();
+  //запрос ajax
+ $('select[name="street"]').append( getStreets(url) );
 });
 
 ///////////////// contact/creat/ ////////////////////
 $('a[data-reveal-id="modal-creat-user"]').click(function(e){
-    e.preventDefault();
+  e.preventDefault();
 	$('form[name="creat-user"]').children().remove();
-    $(cloneCreatForm).clone(true)
-        .appendTo('form[name="creat-user"]');
-    $('input[type="tel"]').mask('9 (999) 999-9999');
-    // навешиваем обработчик даты datetimepicker
-    datetimepickerset();
+  $(cloneCreatForm).clone(true)
+    .appendTo('form[name="creat-user"]');
+  $('input[type="tel"]').mask('9 (999) 999-9999');
+  // навешиваем обработчик даты datetimepicker
+  datetimepickerset();
 });
+
 ///////////////// contact/read ////////////////////
 $('a[data-id-user]').click(function(e){
     e.preventDefault();
@@ -187,24 +188,27 @@ $('a[data-id-user]').click(function(e){
         }
     })
 });
+
 /////////////// contact/update/$id ////////////////
 $('#update').click(function(e){
-    e.preventDefault();
+  e.preventDefault();
 	$(this).hide();
-    // а теперь активируем все инпуты
-    $('input').removeAttr('disabled');
-    $('select').removeAttr('disabled');
-    $('input[type="submit"]').show();
-    $('a.add').removeAttr('disabled');
-    $('.avatar').show();
+  // а теперь активируем все инпуты
+  $('input').removeAttr('disabled');
+  $('select').removeAttr('disabled');
+  $('input[type="submit"]').show();
+  $('a.add').removeAttr('disabled');
+  $('.avatar').show();
 });
+
 /////////////// contact/delete/$id /////////////////
 $('#delete').click(function(e){
-    e.preventDefault();
+  //e.preventDefault();
 	var href = $(this).attr('href');
-    href = href + idUser;
-    $(this).attr('href',href);
+  href = href + idUser;
+  $(this).attr('href',href);
 });
+
 /////////////////////////////////////////////////
 
 // клонируем поле для ввода
