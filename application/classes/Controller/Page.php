@@ -65,4 +65,19 @@ class Controller_Page extends Controller{
         endif;
         $this->view->content = $streetsJSON;
     }
+    function action_getCites(){
+      // установим пустой шаблон
+      $this->layout = 'layouts/clean.php';
+      // получим список городов
+      $citesJSON = json_encode( $this->model->getCity() );
+      $this->view->content = $citesJSON;
+    }
+    function action_getContacts(){
+      // установим пустой шаблон
+      $this->layout = 'layouts/clean.php';
+      // получим список всех юзеров
+      $contactsJSON = json_encode( $this->model->getContacts() );
+      $this->view->content = $contactsJSON;      
+    }
+
 }
