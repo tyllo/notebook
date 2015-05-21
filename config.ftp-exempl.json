@@ -1,0 +1,6 @@
+{
+  "host": "exemple.org",
+  "user": "username",
+  "password": "userpassword",
+  "parallel": "10"
+}

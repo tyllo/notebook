@@ -8,6 +8,8 @@ var gulp       = require('gulp'),
     eol        = require('gulp-eol'),
     rename     = require('gulp-rename'),
     uglify     = require('gulp-uglify'),
+    ftp        = require('vinyl-ftp'),
+    config     = require('./config.ftp.json'),
 //  watch      = require('gulp-watch'),
     
 		paths      = {
@@ -129,6 +131,26 @@ gulp.task('watch', function() {
 // дефолтный таск
 gulp.task('default', function(){
 	gulp.run('watch');
+});
+
+// deploy
+gulp.task('deploy', function(){
+  var conn = ftp.create(config);
+
+	var globs = [
+		'./application**/**',
+    './dest**/**',
+    './.htaccess',
+    './index.php',
+    '!application/config/db.php'
+	];
+
+	// using (cwd) base = '.' will transfer everything to /public_html correctly 
+	// turn off buffering in gulp.src for best performance 
+
+	return gulp.src( globs, { cwd: '.', buffer: false } )
+		.pipe( conn.newerOrDifferentSize( '/public_html/notebook' ) ) // only upload newer files 
+		.pipe( conn.dest( '/public_html/notebook' ) );
 });
 
 
